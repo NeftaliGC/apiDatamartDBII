@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.functions import Functions
+from src.functions.functions import Functions
 
 app = FastAPI()
 
@@ -9,6 +9,7 @@ def read_root():
     print(fun)
     return fun.connect()
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/resumenVentasProducto")
+def resumen_ventas_producto(fecha_inicio: str, fecha_fin: str, nombre_producto: str):
+    fun = Functions()
+    return fun.resumen_ventas_producto(fecha_inicio, fecha_fin, nombre_producto)

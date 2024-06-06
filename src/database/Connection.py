@@ -21,9 +21,21 @@ class Connection:
                 database=self.Database,
                 port=self.Port
             )
-            return {"message": "Conexión exitosa"}
+            schema_status = self.changeSchema("farma")
+            print(schema_status)
+            
+            return {"message": f"Conexión exitosa en schema"}
         except Exception as e:
             return {"message": f"Error en la conexión: {e}"}
+
+    def changeSchema(self, schema):
+        try:
+            self.connection.set_session(autocommit=True)
+            cursor = self.connection.cursor()
+            cursor.execute(f"SET search_path TO {schema}")
+            return {"message": "Schema cambiado"}
+        except Exception as e:
+            return {"message": f"Error al cambiar el schema: {e}"}
 
     def close(self):
         if self.connection:
