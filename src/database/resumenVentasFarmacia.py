@@ -2,13 +2,10 @@ from src.database.Connection import Connection
 
 class ResumenVentasFarmacia:
 
-    def __init__(self, fecha_inicio, fecha_fin, nombre_producto):
+    def __init__(self, fecha_inicio=None, fecha_fin=None, nombre_producto=None):
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
         self.nombre_producto = nombre_producto
-
-    def __init__(self):
-        pass
 
     def getResumenVentasFarmacia(self):
         try:

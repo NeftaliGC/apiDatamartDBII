@@ -1,35 +1,37 @@
 ```SQL
 
-CREATE OR REPLACE FUNCTION resumen_ventas_producto(
-    fecha_inicio DATE, 
-    fecha_fin DATE,
-    nombre_producto_param VARCHAR(20)
+CREATE OR REPLACE FUNCTION obtener_ranking_productos_mas_vendidos(
+    fecha_inicio DATE,
+    fecha_final DATE
 )
 RETURNS TABLE (
-    nombre_producto VARCHAR(20),
-    total_cantidad_vendida NUMERIC,
-    total_venta NUMERIC
+    id_producto VARCHAR,
+    nombre_producto VARCHAR,
+    cantidad_vendida INT,
+    ranking BIGINT
 ) AS $$
 BEGIN
     RETURN QUERY
     SELECT
+        p.id_producto,
         p.nombre_producto,
-        SUM(v.cantidad_vendida) AS total_cantidad_vendida,
-        SUM(v.total_venta) AS total_venta
+        CAST(SUM(v.cantidad_vendida) AS INT) AS cantidad_vendida,
+        dense_rank() OVER (ORDER BY SUM(v.cantidad_vendida) DESC) AS ranking
     FROM
-        venta v
-    NATURAL JOIN
-        producto p
+        VENTA v
     JOIN
-        ticket t ON v.id_ticket = t.id_ticket
+        PRODUCTO p ON v.id_producto = p.id_producto
+    JOIN
+        TICKET t ON v.Id_ticket = t.Id_ticket
     WHERE
-        (p.nombre_producto = nombre_producto_param OR nombre_producto_param IS NULL)
-        AND (t.fecha_ticket BETWEEN fecha_inicio AND fecha_fin OR (fecha_inicio IS NULL AND fecha_fin IS NULL))
+        t.Fecha_ticket BETWEEN fecha_inicio AND fecha_final
     GROUP BY
-        ROLLUP (p.nombre_producto)
-    ORDER BY total_cantidad_vendida DESC;
+        p.id_producto, p.nombre_producto
+    ORDER BY
+        ranking;
 END;
 $$ LANGUAGE plpgsql;
+
 
 
 ```
@@ -146,3 +148,20 @@ $$ LANGUAGE plpgsql;
 
 
 ```
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+

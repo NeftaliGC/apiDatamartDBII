@@ -1,18 +1,18 @@
 from src.database.Connection import Connection
 
-class ResumenVentasProducto:
+class Ranks:
     def __init__(self, fecha_inicio=None, fecha_fin=None, nombre_producto=None):
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
         self.nombre_producto = nombre_producto
-
-    def getResumenVentasProducto(self):
+    
+    def getDenseRank(self):
         try:
             self.connection = Connection()
             self.connection.connect()
             cursor = self.connection.connection.cursor()
             cursor.execute(
-                f"SELECT * FROM resumen_ventas_producto('{self.fecha_inicio}', '{self.fecha_fin}', '{self.nombre_producto}')"
+                f"SELECT * FROM obtener_ranking_productos_mas_vendidos('{self.fecha_inicio}', '{self.fecha_fin}')"
             )
             data = cursor.fetchall()
             self.connection.close()
@@ -20,13 +20,13 @@ class ResumenVentasProducto:
         except Exception as e:
             return {"message": f"Error en la consulta: {e}"}
 
-    def getResumenCompletoVentasProducto(self):
+    def getDenseRankCompleto(self):
         try:
             self.connection = Connection()
             self.connection.connect()
             cursor = self.connection.connection.cursor()
             cursor.execute(
-                f"SELECT * FROM resumen_completo_ventas_producto()"
+                f"SELECT * FROM obtener_ranking_completo_productos_mas_vendidos()"
             )
             data = cursor.fetchall()
             self.connection.close()
@@ -34,13 +34,13 @@ class ResumenVentasProducto:
         except Exception as e:
             return {"message": f"Error en la consulta: {e}"}
 
-    def getDesgloseVentasProducto(self):
+    def getRank(self):
         try:
             self.connection = Connection()
             self.connection.connect()
             cursor = self.connection.connection.cursor()
             cursor.execute(
-                f"SELECT * FROM desglose_ventas_producto('{self.fecha_inicio}', '{self.fecha_fin}', '{self.nombre_producto}')"
+                f"SELECT * FROM obtener_ranking_productos_mas_vendidos_notdense('{self.fecha_inicio}', '{self.fecha_fin}')"
             )
             data = cursor.fetchall()
             self.connection.close()
@@ -48,13 +48,14 @@ class ResumenVentasProducto:
         except Exception as e:
             return {"message": f"Error en la consulta: {e}"}
 
-    def getDesgloseCompletoVentasProducto(self):
+
+    def getRankCompleto(self):
         try:
             self.connection = Connection()
             self.connection.connect()
             cursor = self.connection.connection.cursor()
             cursor.execute(
-                f"SELECT * FROM desglose_completo_ventas_producto()"
+                f"SELECT * FROM obtener_ranking_productos_mas_vendidos_notdense()"
             )
             data = cursor.fetchall()
             self.connection.close()
