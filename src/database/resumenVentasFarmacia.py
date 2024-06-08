@@ -13,7 +13,7 @@ class ResumenVentasFarmacia:
             self.connection.connect()
             cursor = self.connection.connection.cursor()
             cursor.execute(
-                f"SELECT * FROM resumen_ventas_farmacia('{self.fecha_inicio}', '{self.fecha_fin}', '{self.nombre_producto}')"
+                f"SELECT * FROM resumen_ventas_farmacia('{self.fecha_inicio}', '{self.fecha_fin}')"
             )
             data = cursor.fetchall()
             self.connection.close()

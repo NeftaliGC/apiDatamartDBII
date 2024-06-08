@@ -55,7 +55,7 @@ class Ranks:
             self.connection.connect()
             cursor = self.connection.connection.cursor()
             cursor.execute(
-                f"SELECT * FROM obtener_ranking_productos_mas_vendidos_notdense()"
+                f"SELECT * FROM obtener_ranking_completo_productos_mas_vendidos_notdense()"
             )
             data = cursor.fetchall()
             self.connection.close()

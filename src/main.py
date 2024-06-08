@@ -15,7 +15,9 @@ def read_root():
 @app.get("/test")
 def test():
     return {"message": "Funciona correctamente"}
-    
+############################################################################################################
+
+# Dense Ranking de ventas - TESTEADO
 @app.get("/denserankingVentas")
 def resumen_ventas_producto(fecha_inicio: str, fecha_fin: str):
     fun = Functions()
@@ -41,17 +43,19 @@ def resumen_completo_ventas_productoGrafico():
     if isinstance(buf, dict):
         return buf
     return StreamingResponse(buf, media_type='image/png')
+############################################################################################################
 
 
+# Ranking de ventas - TESTEADO
 @app.get("/rankingVentas")
 def resumen_ventas_producto(fecha_inicio: str, fecha_fin: str):
     fun = Functions()
-    return fun.rank_producto(fecha_inicio, fecha_fin, nombre_producto)
+    return fun.rank_producto(fecha_inicio, fecha_fin)
 
 @app.get("/rankingVentasGrafico")
 def resumen_ventas_productoGrafico(fecha_inicio: str, fecha_fin: str):
     fun = Functions()
-    buf = fun.get_graphic_ventas_producto(fecha_inicio, fecha_fin, nombre_producto)
+    buf = fun.get_graphic_rank_producto(fecha_inicio, fecha_fin)
     if isinstance(buf, dict):
         return buf
     return StreamingResponse(buf, media_type='image/png')
@@ -61,10 +65,28 @@ def resumen_completo_rank_producto():
     fun = Functions()
     return fun.rank_completo_producto()
 
-@app.get("/resumenVentasFarmacia")
-def resumen_ventas_farmacia(fecha_inicio: str, fecha_fin: str, nombre_producto: str):
+@app.get("/rankingCompletoVentasGrafico")
+def resumen_completo_rank_productoGrafico():
     fun = Functions()
-    return fun.resumen_ventas_farmacia(fecha_inicio, fecha_fin, nombre_producto)
+    buf = fun.get_graphic_rank_completo_producto()
+    if isinstance(buf, dict):
+        return buf
+    return StreamingResponse(buf, media_type='image/png')
+############################################################################################################
+
+# Resumen de ventas por farmacia - TESTEADO
+@app.get("/resumenVentasFarmacia")
+def resumen_ventas_farmacia(fecha_inicio: str, fecha_fin: str):
+    fun = Functions()
+    return fun.resumen_ventas_farmacia(fecha_inicio, fecha_fin)
+
+@app.get("/resumenVentasFarmaciaGrafico")
+def resumen_ventas_farmaciaGrafico(fecha_inicio: str, fecha_fin: str):
+    fun = Functions()
+    buf = fun.get_graphic_resumen_ventas_farmacia(fecha_inicio, fecha_fin)
+    if isinstance(buf, dict):
+        return buf
+    return StreamingResponse(buf, media_type='image/png')
 
 @app.get("/resumenCompletoVentasFarmacia")
 def resumen_completo_ventas_farmacia():
@@ -79,15 +101,19 @@ def resumen_completo_ventas_farmaciaGrafico():
         return buf
     return StreamingResponse(buf, media_type='image/png')
 
+############################################################################################################
+
+
+# Desglose de ventas por producto - TESTEADO
 @app.get("/desgloseVentasProducto")
-def desglose_ventas_producto(fecha_inicio: str, fecha_fin: str, nombre_producto: str):
+def desglose_ventas_producto(fecha_inicio: str, fecha_fin: str):
     fun = Functions()
-    return fun.desglose_ventas_producto(fecha_inicio, fecha_fin, nombre_producto)
+    return fun.desglose_ventas_producto(fecha_inicio, fecha_fin)
 
 @app.get("/desgloseVentasProductoGrafico")
-def desglose_ventas_productoGrafico(fecha_inicio: str, fecha_fin: str, nombre_producto: str):
+def desglose_ventas_productoGrafico(fecha_inicio: str, fecha_fin: str):
     fun = Functions()
-    buf = fun.get_graphic_desglose_completo()
+    buf = fun.get_graphic_ventas_producto(fecha_inicio, fecha_fin)
     if isinstance(buf, dict):
         return buf
     return StreamingResponse(buf, media_type='image/png')

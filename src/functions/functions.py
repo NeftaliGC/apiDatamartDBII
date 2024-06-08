@@ -28,7 +28,7 @@ class Functions:
     def dense_rank_completo_producto(self):
         self.res = Ranks()
         return self.res.getDenseRankCompleto()
-
+    
     def get_graphic_dense_ranking(self, data):
         buf = self.get_ranking_chart(data)
         return buf
@@ -36,7 +36,7 @@ class Functions:
 
     # Funciones para el ranking de productos
     def rank_producto(self, fecha_inicio, fecha_fin):
-        self.res = Ranks(fecha_inicio, fecha_fin, nombre_producto)
+        self.res = Ranks(fecha_inicio, fecha_fin)
         return self.res.getRank()
 
     def get_graphic_rank_producto(self, fecha_inicio, fecha_fin):
@@ -57,12 +57,12 @@ class Functions:
     #########################################################
 
     # Funciones para el resumen de ventas por farmacia
-    def resumen_ventas_farmacia(self, fecha_inicio, fecha_fin, nombre_farmacia):
-        self.res = ResumenVentasFarmacia(fecha_inicio, fecha_fin, nombre_farmacia)
+    def resumen_ventas_farmacia(self, fecha_inicio, fecha_fin):
+        self.res = ResumenVentasFarmacia(fecha_inicio, fecha_fin)
         return self.res.getResumenVentasFarmacia()
 
-    def get_graphic_resumen_ventas_farmacia(self, fecha_inicio, fecha_fin, nombre_farmacia):
-        data = self.resumen_ventas_farmacia(fecha_inicio, fecha_fin, nombre_farmacia)
+    def get_graphic_resumen_ventas_farmacia(self, fecha_inicio, fecha_fin):
+        data = self.resumen_ventas_farmacia(fecha_inicio, fecha_fin)
         buf = self.get_pie_chart_for_breakdown(data)
 
         return buf
@@ -79,12 +79,12 @@ class Functions:
     #########################################################
 
     # Funciones para el desglose de ventas por producto
-    def desglose_ventas_producto(self, fecha_inicio, fecha_fin, nombre_producto):
-        self.res = ResumenVentasProducto(fecha_inicio, fecha_fin, nombre_producto)
+    def desglose_ventas_producto(self, fecha_inicio, fecha_fin):
+        self.res = ResumenVentasProducto(fecha_inicio, fecha_fin)
         return self.res.getDesgloseVentasProducto()
 
-    def get_graphic_ventas_producto(self, fecha_inicio, fecha_fin, nombre_producto):
-        data = self.desglose_ventas_producto(fecha_inicio, fecha_fin, nombre_producto)
+    def get_graphic_ventas_producto(self, fecha_inicio, fecha_fin):
+        data = self.desglose_ventas_producto(fecha_inicio, fecha_fin)
         buf = self.get_pie_chart(data)
 
         return buf
@@ -134,7 +134,7 @@ class Functions:
         for categoria, productos in categoria_producto.items():
             total_ventas_categoria = ventas_por_categoria[categoria]
             legend_labels.append(f"{categoria}: {', '.join(productos)} (${total_ventas_categoria:.2f})")
-        legend_labels.append(f"Total General: {total_general:.2f}")
+        #legend_labels.append(f"Total General: {total_general:.2f}")
 
         plt.figure(figsize=(10, 7))
         plt.pie(total_ventas, labels=categorias, autopct='%1.1f%%', startangle=140)
