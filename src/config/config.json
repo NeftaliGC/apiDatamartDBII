@@ -3,7 +3,7 @@
         "Host": "localhost",
         "User": "postgres",
         "Password": "Nintech1904",
-        "Database": "postgres",
+        "Database": "pharmacy",
         "Port": "5432"
     }
 ]
